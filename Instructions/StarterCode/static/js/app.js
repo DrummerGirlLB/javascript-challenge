@@ -1,7 +1,8 @@
-// from data.js
+// from data.js (to descriptive variable for later)
 var tableData = data;
 
 // YOUR CODE HERE!
+
 //reference table body in html file
 var tbody = d3.select("tbody");
 
@@ -24,10 +25,26 @@ var row = tbody.append("tr");
     });
 });
 
+//select the button
+var button = d3.select("#filter-btn")
+//select the form
+var form = d3.select(".form-control")
+
+//
+button.on("click", runFilter);
+form.on("submit", runFilter);
 
 
-// Input fields can trigger a change event when new text is entered. NOTE: I copied this cause I know Ill need it.
-//inputField.on("change", function() {
-//    var newText = d3.event.target.value;
-//    console.log(newText);
-//  });  
+//NOTE: dont forget: you need # for ID elements!
+function runFilter() {
+    d3.event.preventDefault();
+//select element and get raw html code
+    var inputElement = d3.select("#datetime");
+//get value property of inputelement
+    var inputValue = inputElement.property("value");
+
+//use form input to filter data by datetime
+    var filteredData = tableData.filter(sighting => sighting.datetime === inputValue);
+    console.log(inputValue);
+    console.log(filteredData);
+};
